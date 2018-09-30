@@ -11,11 +11,12 @@ RUN apt-get install -y php7.2 php7.2-cli php7.2-common php7.2-curl php7.2-gd php
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 #RUN docker-php-ext-install pdo mbstring
 
-
 #ONBUILD
 ONBUILD COPY laravel /opt/app
 ONBUILD WORKDIR /opt/app
 ONBUILD RUN composer install
+ONBUILD RUN cp .env.example .env
+ONBUILD RUN php artisan key:generate
 
 ###### CHECK ######
 # docker build -t ft-laravel ./
